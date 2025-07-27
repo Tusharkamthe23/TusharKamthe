@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/navbar";
-import HomeSection from "./components/Homesection";
+import HomeSection from "./components/HomeSection";
 import Skills from "./components/Skillsection"
 import ProjectSection from "./components/ProjectSection";
 import TechSkills from "./components/Skillsection";
