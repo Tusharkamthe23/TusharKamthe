@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, User, Bot } from 'lucide-react';
 
 const ChatBot = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  // Changed initial state to true for automatic popup
+  const [isOpen, setIsOpen] = useState(true);
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -13,7 +14,9 @@ const ChatBot = () => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [userInteracted, setUserInteracted] = useState(false);
   const messagesEndRef = useRef(null);
+  const autoCloseTimerRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -22,6 +25,40 @@ const ChatBot = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Optional: Add a delay before showing the chatbot
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+    }, 1000); // 1 second delay
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Auto-close chatbot if no user interaction within 3 seconds
+  useEffect(() => {
+    if (isOpen && !userInteracted) {
+      autoCloseTimerRef.current = setTimeout(() => {
+        setIsOpen(false);
+      }, 3000); // Close after 3 seconds
+    }
+
+    return () => {
+      if (autoCloseTimerRef.current) {
+        clearTimeout(autoCloseTimerRef.current);
+      }
+    };
+  }, [isOpen, userInteracted]);
+
+  // Track user interaction
+  const handleUserInteraction = () => {
+    if (!userInteracted) {
+      setUserInteracted(true);
+      if (autoCloseTimerRef.current) {
+        clearTimeout(autoCloseTimerRef.current);
+      }
+    }
+  };
 
   const sendMessageToFlask = async (message) => {
     try {
@@ -51,6 +88,8 @@ const ChatBot = () => {
 
   const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
+
+    handleUserInteraction(); // Mark as interacted
 
     const userMessage = {
       id: Date.now(),
@@ -217,6 +256,8 @@ const ChatBot = () => {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
+                  onFocus={handleUserInteraction} // Track interaction on focus
+                  onInput={handleUserInteraction} // Track interaction on input
                   placeholder="Ask me anything..."
                   disabled={isTyping}
                   className="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 text-sm"

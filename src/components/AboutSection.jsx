@@ -82,7 +82,7 @@ const AboutSection = () => {
                 <h3 className="text-xl font-bold text-green-400">Currently Working At</h3>
               </div>
               <div className="space-y-2">
-                <p className="text-lg font-semibold text-white">HCL Technologis</p>
+                <p className="text-lg font-semibold text-white">HCL Technologies</p>
                 <p className="text-slate-300">Senior Software Engineer</p>
                 <p className="text-sm text-slate-400">Building scalable AI-powered applications and cloud infrastructure</p>
               </div>
