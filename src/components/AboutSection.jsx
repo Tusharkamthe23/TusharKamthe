@@ -19,11 +19,11 @@ const AboutSection = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-500 mx-auto rounded-full"></div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items ">
           {/* Left Column - Profile */}
-          <div className="space-y-8">
+          <div className="space-y-8 ">
             {/* Profile Image Placeholder */}
-            <div className="relative">
+            <div className="relative relative ">
               <div className="w-64 h-64 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-2xl">
                 <div className="w-60 h-60 bg-slate-800 rounded-full flex items-center justify-center">
                   <span className="text-6xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text">
@@ -85,6 +85,54 @@ const AboutSection = () => {
                 <p className="text-lg font-semibold text-white">HCL Technologies</p>
                 <p className="text-slate-300">Senior Software Engineer</p>
                 <p className="text-sm text-slate-400">Building scalable AI-powered applications and cloud infrastructure</p>
+              </div>
+            </div>
+            {/* Education */}
+            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700">
+              <h3 className="text-2xl font-bold mb-6 text-blue-400">Education</h3>
+
+              <div className="space-y-6">
+
+                {/* Item 1 */}
+                <div className="relative pl-6">
+                  <div className="absolute left-0 top-2 w-3 h-3 bg-blue-500 rounded-full"></div>
+                  <h4 className="text-xl font-semibold text-white">
+                    B.Tech in Computer Science and Engineering
+                  </h4>
+                  <p className="text-slate-400 text-sm">Yeshwantrao Chavan College of Engineering, Nagpur University • 2020 – 2024</p>
+                  <p className="text-slate-300 mt-2">
+                    Specialized in software engineering, AI/ML, cloud technologies, and 
+                    modern web development. Built multiple academic and personal projects, 
+                    strengthening core programming and problem-solving skills.
+                  </p>
+                </div>
+
+               {/* Item 2 
+                <div className="relative pl-6">
+                  <div className="absolute left-0 top-2 w-3 h-3 bg-purple-500 rounded-full"></div>
+                  <h4 className="text-xl font-semibold text-white">
+                    Higher Secondary (12th Grade)
+                  </h4>
+                  <p className="text-slate-400 text-sm">ABC Junior College • 2018 – 2020</p>
+                  <p className="text-slate-300 mt-2">
+                    Completed science stream with a strong interest in mathematics, physics, 
+                    and computer fundamentals. Achieved excellent academic performance.
+                  </p>
+                </div>
+                */}
+                {/* Item 3 
+                <div className="relative pl-6">
+                  <div className="absolute left-0 top-2 w-3 h-3 bg-pink-500 rounded-full"></div>
+                  <h4 className="text-xl font-semibold text-white">
+                    Secondary School (10th Grade)
+                  </h4>
+                  <p className="text-slate-400 text-sm">ABC High School • 2017 – 2018</p>
+                  <p className="text-slate-300 mt-2">
+                    Built a strong academic base and developed early interest in technology, 
+                    problem-solving, and practical learning.
+                  </p>
+                </div>
+                  */}
               </div>
             </div>
 

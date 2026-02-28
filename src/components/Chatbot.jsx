@@ -1,18 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, User, Bot } from 'lucide-react';
+import React, { useState, useRef, useEffect } from "react";
+import { MessageCircle, X, Send, User, Bot } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const ChatBot = () => {
-  // Changed initial state to true for automatic popup
   const [isOpen, setIsOpen] = useState(true);
   const [messages, setMessages] = useState([
     {
       id: 1,
       text: "Hi! I'm your personal assistant. Ask me anything about my background, skills, projects, or experience!",
-      sender: 'bot',
-      timestamp: new Date()
-    }
+      sender: "bot",
+      timestamp: new Date(),
+    },
   ]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
   const messagesEndRef = useRef(null);
@@ -26,62 +27,60 @@ const ChatBot = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Optional: Add a delay before showing the chatbot
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsOpen(true);
-    }, 1000); // 1 second delay
-
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
-  // Auto-close chatbot if no user interaction within 3 seconds
   useEffect(() => {
     if (isOpen && !userInteracted) {
       autoCloseTimerRef.current = setTimeout(() => {
         setIsOpen(false);
-      }, 3000); // Close after 3 seconds
+      }, 3000);
     }
-
     return () => {
-      if (autoCloseTimerRef.current) {
-        clearTimeout(autoCloseTimerRef.current);
-      }
+      if (autoCloseTimerRef.current) clearTimeout(autoCloseTimerRef.current);
     };
   }, [isOpen, userInteracted]);
 
-  // Track user interaction
   const handleUserInteraction = () => {
     if (!userInteracted) {
       setUserInteracted(true);
-      if (autoCloseTimerRef.current) {
-        clearTimeout(autoCloseTimerRef.current);
-      }
+      if (autoCloseTimerRef.current) clearTimeout(autoCloseTimerRef.current);
     }
   };
 
+  // <-- FIXED: actually perform fetch and handle responses robustly
   const sendMessageToFlask = async (message) => {
     try {
-      //const response = await fetch('http://localhost:5000/api/chat', {
-      const response = await fetch('https://myportfolio-backend-99jn.onrender.com/chat', {
-        method: 'POST',
+      const response = await fetch("https://myportfolio-backend-chat-ysg6.onrender.com/chat", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           message: message,
-          user_id: 'user_123' // Optional: for session management
+          user_id: "user_123",
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        // optionally log body for debugging
+        const txt = await response.text();
+        console.error("Non-OK response from server:", response.status, txt);
+        throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
-      return data.response;
+      // try common field names you'll get from different backends
+      const reply = data.response ?? data.reply ?? data.answer ?? data.message ?? null;
+      if (reply) return reply;
+      // if API returns a complex object, stringify fallback
+      return typeof data === "string" ? data : JSON.stringify(data);
     } catch (error) {
-      console.error('Error sending message to Flask:', error);
+      console.error("Error sending message to Flask:", error);
       return "Sorry, I'm having trouble connecting right now. Please try again later.";
     }
   };
@@ -89,46 +88,46 @@ const ChatBot = () => {
   const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
 
-    handleUserInteraction(); // Mark as interacted
+    handleUserInteraction();
 
     const userMessage = {
       id: Date.now(),
       text: inputValue,
-      sender: 'user',
-      timestamp: new Date()
+      sender: "user",
+      timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     const currentInput = inputValue;
-    setInputValue('');
+    setInputValue("");
     setIsTyping(true);
 
     try {
       const botResponseText = await sendMessageToFlask(currentInput);
-      
+
       const botResponse = {
         id: Date.now() + 1,
         text: botResponseText,
-        sender: 'bot',
-        timestamp: new Date()
+        sender: "bot",
+        timestamp: new Date(),
       };
-      
-      setMessages(prev => [...prev, botResponse]);
+
+      setMessages((prev) => [...prev, botResponse]);
     } catch (error) {
       const errorResponse = {
         id: Date.now() + 1,
         text: "Sorry, I encountered an error. Please try again.",
-        sender: 'bot',
-        timestamp: new Date()
+        sender: "bot",
+        timestamp: new Date(),
       };
-      setMessages(prev => [...prev, errorResponse]);
+      setMessages((prev) => [...prev, errorResponse]);
     } finally {
       setIsTyping(false);
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
@@ -139,37 +138,51 @@ const ChatBot = () => {
       {
         id: 1,
         text: "Hi! I'm your personal assistant. Ask me anything about my background, skills, projects, or experience!",
-        sender: 'bot',
-        timestamp: new Date()
-      }
+        sender: "bot",
+        timestamp: new Date(),
+      },
     ]);
+  };
+
+  // Custom components for ReactMarkdown so Tailwind classes apply to inner tags
+  const mdComponents = {
+    p: ({ node, ...props }) => (
+      <p className="text-sm leading-relaxed whitespace-pre-wrap" {...props} />
+    ),
+    a: ({ node, ...props }) => (
+      // open links in new tab
+      <a {...props} target="_blank" rel="noopener noreferrer" className="underline" />
+    ),
+    code: ({ node, inline, className, children, ...props }) =>
+      inline ? (
+        <code className="rounded px-1 py-0.5 bg-gray-100 text-sm" {...props}>
+          {children}
+        </code>
+      ) : (
+        <pre className="rounded p-2 bg-gray-900 text-white text-xs overflow-x-auto break-words" {...props}>
+
+          <code>{children}</code>
+        </pre>
+      ),
   };
 
   return (
     <>
-      {/* Chatbot Toggle Button */}
       <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={() => setIsOpen(true)}
-          className={`bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:scale-110 ${isOpen ? 'hidden' : 'block'}`}
+          className={`bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:scale-110 ${isOpen ? "hidden" : "block"}`}
           aria-label="Open chat"
         >
           <MessageCircle size={24} />
         </button>
       </div>
 
-      {/* Chatbot Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-end justify-end p-4 md:p-6">
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-black bg-opacity-20 backdrop-blur-sm"
-            onClick={() => setIsOpen(false)}
-          />
-          
-          {/* Chat Window */}
+          <div className="absolute inset-0 bg-black bg-opacity-20 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
+
           <div className="relative w-full max-w-md h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col animate-in slide-in-from-bottom-4 duration-300">
-            {/* Header */}
             <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-t-2xl flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
@@ -181,48 +194,34 @@ const ChatBot = () => {
                 </div>
               </div>
               <div className="flex items-center space-x-2">
-                <button
-                  onClick={clearChat}
-                  className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1 transition-colors text-xs px-2 py-1"
-                  title="Clear chat"
-                >
+                <button onClick={clearChat} className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1 transition-colors text-xs px-2 py-1" title="Clear chat">
                   Clear
                 </button>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1 transition-colors"
-                  aria-label="Close chat"
-                >
+                <button onClick={() => setIsOpen(false)} className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1 transition-colors" aria-label="Close chat">
                   <X size={20} />
                 </button>
               </div>
             </div>
 
-            {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
               {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-3 ${
-                      message.sender === 'user'
-                        ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                        : 'bg-white text-gray-800 shadow-sm border'
-                    }`}
-                  >
+                <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}>
+                  <div className={`max-w-[95%] rounded-2xl px-4 py-3 ${message.sender === "user" ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white" : "bg-white text-gray-800 shadow-sm border"}`}>
                     <div className="flex items-start space-x-2">
-                      {message.sender === 'bot' && (
-                        <Bot size={16} className="mt-1 text-blue-500 flex-shrink-0" />
-                      )}
-                      {message.sender === 'user' && (
-                        <User size={16} className="mt-1 text-white flex-shrink-0" />
-                      )}
+                      {message.sender === "bot" && <Bot size={16} className="mt-1 text-blue-500 flex-shrink-0" />}
+                      {message.sender === "user" && <User size={16} className="mt-1 text-white flex-shrink-0" />}
                       <div className="flex-1">
-                        <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
-                        <p className={`text-xs mt-1 ${message.sender === 'user' ? 'text-white opacity-70' : 'text-gray-500'}`}>
-                          {message.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                        {/* Use ReactMarkdown for bot; plain <p> for user */}
+                        {message.sender === "bot" ? (
+                          <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents} >
+                            {message.text}
+                          </ReactMarkdown>
+                        ) : (
+                          <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                        )}
+
+                        <p className={`text-xs mt-1 ${message.sender === "user" ? "text-white opacity-70" : "text-gray-500"}`}>
+                          {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                         </p>
                       </div>
                     </div>
@@ -230,7 +229,6 @@ const ChatBot = () => {
                 </div>
               ))}
 
-              {/* Typing Indicator */}
               {isTyping && (
                 <div className="flex justify-start">
                   <div className="bg-white rounded-2xl px-4 py-3 shadow-sm border">
@@ -238,8 +236,8 @@ const ChatBot = () => {
                       <Bot size={16} className="text-blue-500" />
                       <div className="flex space-x-1">
                         <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
                       </div>
                     </div>
                   </div>
@@ -248,16 +246,15 @@ const ChatBot = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input */}
             <div className="p-4 border-t bg-white rounded-b-2xl">
               <div className="flex space-x-2">
                 <input
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  onFocus={handleUserInteraction} // Track interaction on focus
-                  onInput={handleUserInteraction} // Track interaction on input
+                  onKeyDown={handleKeyDown}
+                  onFocus={handleUserInteraction}
+                  onInput={handleUserInteraction}
                   placeholder="Ask me anything..."
                   disabled={isTyping}
                   className="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 text-sm"

@@ -32,7 +32,16 @@ const ProjectSection = () => {
       github: 'https://github.com/Tusharkamthe23/Video-Ai-Agent',
       demo: 'https://multimodel-ai-agent.streamlit.app/'
     },
-   
+    {
+      id: 3,
+      title: 'Sentiment Analysis classification Tool',
+      description: 'Fine-tuned the LLaMA 3.2 model for sentiment and feedback classification by analyzing customer reviews and social media data using advanced NLP techniques.',
+      category: 'Gen AI',
+      image: 'projects/FineTune.png',
+      technologies: ['QLoRA', 'Lamma 3.2', 'LLM Fine Tuning'],
+      github: 'https://github.com/Tusharkamthe23/LLaMA-3.2-Fine-Tuning-for-Sentiment-Analysis-on-Amazon-Reviews',
+      demo: 'https://huggingface.co/Tushar1K/llama3.2-merged-sentiment'
+    },
     {
       id: 1,
       title: 'AI Chat Assistant',
@@ -44,11 +53,11 @@ const ProjectSection = () => {
       demo: 'https://demo.com'
     },
      {
-    id: 3,
+    id: 11,
       title: 'Image Generation Studio',
       description: 'Create stunning AI-generated artwork using diffusion models and custom prompts.',
       category: 'Gen AI',
-      image: 'https://images.unsplash.com/photo-1686191128892-c5e55b4f7445?w=400&h=250&fit=crop',
+      image: 'projects/Diffusion_model.png',
       technologies: ['Python', 'Stable Diffusion', 'Flask', 'React'],
       github: 'https://github.com',
       demo: 'https://demo.com'
@@ -76,7 +85,17 @@ const ProjectSection = () => {
       demo: 'https://demo.com'
     },
     {
-      id: 6,
+    id: 5,
+    title: 'AI README Generator',
+    description: 'LLM-powered application that automatically generates high-quality GitHub README files from project source code and metadata.',
+    category: 'AI',
+    image: 'projects/ReadMe.jpg',
+    technologies: ['Python', 'LLM (LLaMA 3.2)', 'FastAPI', 'LangChain', 'GitHub API'],
+    github: 'https://github.com/Tusharkamthe23/README.AI',
+    demo: 'https://readme--ai.streamlit.app/'
+  },
+    {
+      id: 4,
       title: 'E-commerce Platform',
       description: 'Full-stack e-commerce solution with payment integration and inventory management.',
       category: 'Web',
@@ -105,17 +124,10 @@ const ProjectSection = () => {
       technologies: ['React', 'D3.js', 'PostgreSQL', 'Express'],
       github: 'https://github.com',
       demo: 'https://demo.com'
-    },
-    {
-      id: 6,
-      title: 'Sentiment Analysis Tool',
-      description: 'Analyze customer feedback and social media sentiment using advanced NLP techniques.',
-      category: 'ML',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop',
-      technologies: ['Python', 'NLTK', 'PyTorch', 'FastAPI'],
-      github: 'https://github.com',
-      demo: 'https://demo.com'
     }
+    
+
+    
   ];
 
   const filteredProjects = activeCategory === 'All' 
