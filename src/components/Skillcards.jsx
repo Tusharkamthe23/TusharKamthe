@@ -6,9 +6,11 @@ const Skillscards = () => {
 
   const categories = [
     { name: 'All', icon: Code, color: 'bg-purple-500' },
+    { name: 'AI/ML', icon: Brain, color: 'bg-pink-500' },
+    { name: 'Agentic AI', icon: Brain, color: 'bg-pink-500' },
     { name: 'Frontend', icon: Globe, color: 'bg-blue-500' },
     { name: 'Backend', icon: Server, color: 'bg-green-500' },
-    { name: 'AI/ML', icon: Brain, color: 'bg-pink-500' },
+    
     { name: 'Tools', icon: GitBranch, color: 'bg-orange-500' }
   ];
 
@@ -119,6 +121,8 @@ const Skillscards = () => {
     },
 
     // AI/ML Skills
+
+    
     {
       id: 13,
       name: 'TensorFlow',
@@ -149,16 +153,7 @@ const Skillscards = () => {
       tags: ['Algorithms', 'Preprocessing', 'Evaluation', 'Pipeline'],
       levelColor: 'text-green-600 bg-green-100'
     },
-    {
-      id: 16,
-      name: 'OpenAI API',
-      category: 'AI/ML',
-      level: 'Expert',
-      icon: '🤖',
-      description: 'Integration with GPT models and AI-powered applications',
-      tags: ['GPT', 'Embeddings', 'Fine-tuning', 'Prompts'],
-      levelColor: 'text-green-600 bg-green-100'
-    },
+    
     {
       id: 16,
       name: 'langchain',
@@ -250,6 +245,48 @@ const Skillscards = () => {
       description: 'Module bundler for modern JavaScript applications',
       tags: ['Bundling', 'Optimization', 'Loaders', 'Plugins'],
       levelColor: 'text-yellow-600 bg-yellow-100'
+    },
+
+    {
+      id: 25,
+      name: 'LangGraph',
+      category: 'Agentic AI',
+      level: 'Advanced',
+      icon: '🕸️',
+      description: 'Framework for building stateful, multi-agent workflows with LLMs using graphs',
+      tags: ['Agents', 'LLM Workflows', 'State Machines', 'LangChain'],
+      levelColor: 'text-purple-600 bg-purple-100'
+    },
+    {
+      id: 26,
+      name: 'CrewAI',
+      category: 'Agentic AI',
+      level: 'Advanced',
+      icon: '🤖',
+      description: 'Framework for orchestrating role-based AI agents working together as a team',
+      tags: ['Multi-Agent', 'Autonomous Agents', 'LLM Orchestration', 'Task Collaboration'],
+      levelColor: 'text-blue-600 bg-blue-100'
+    },
+    {
+      id: 27,
+      name: 'AutoGen',
+      category: 'Agentic AI',
+      level: 'Advanced',
+      icon: '⚙️',
+      description: 'Microsoft framework for building multi-agent AI systems that collaborate to solve tasks',
+      tags: ['Agents', 'LLM Collaboration', 'Automation', 'AI Systems'],
+      levelColor: 'text-indigo-600 bg-indigo-100'
+    },
+ 
+    {
+      id: 29,
+      name: 'n8n',
+      category: 'Agentic AI',
+      level: 'Advanced',
+      icon: '🔗',
+      description: 'Powerful workflow automation platform for integrating APIs, AI models, and services without heavy coding',
+      tags: ['Automation', 'Integrations', 'AI Workflows', 'Webhooks'],
+      levelColor: 'text-orange-600 bg-orange-100'
     }
   ];
 
@@ -268,7 +305,7 @@ const Skillscards = () => {
 
   return (
     <div 
-    className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50 pt-20 relative overflow-hidden"
+    className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50 pt-10 relative overflow-hidden"
      //className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 relative overflow-hidden"
      >
       {/* Animated Background Elements */}
@@ -278,7 +315,7 @@ const Skillscards = () => {
         <div className="absolute top-1/3 left-1/3 w-80 h-80 bg-gradient-to-br from-emerald-200 to-teal-200 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-pulse delay-2000"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-12 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -331,9 +368,11 @@ const Skillscards = () => {
                     </div>
                   </div>
                   <span className={`px-3 py-1 rounded-full text-xs font-medium text-white backdrop-blur-sm ${
+                    skill.category === 'AI/ML' ? 'bg-pink-500/90' :
+                    skill.category === 'Agentic AI' ? 'bg-pink-500/90' :
                     skill.category === 'Frontend' ? 'bg-blue-500/90' :
                     skill.category === 'Backend' ? 'bg-green-500/90' :
-                    skill.category === 'AI/ML' ? 'bg-pink-500/90' :
+                    
                     'bg-orange-500/90'
                   }`}>
                     {skill.category}

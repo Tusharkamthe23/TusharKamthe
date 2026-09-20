@@ -62,7 +62,7 @@ const BackgroundMusic = () => {
         style={{
           position: "fixed",
           top: "10px",
-          left: "20px",
+          left: "10px",
           zIndex: 9999,
           padding: "10px",
           borderRadius: "50%",

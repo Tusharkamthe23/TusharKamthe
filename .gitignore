@@ -20,6 +20,7 @@ dist-ssr
 # Vercel build output
 .vercel/
 
+faiss_index_v1/
 
 # Editor directories and files
 .vscode/*

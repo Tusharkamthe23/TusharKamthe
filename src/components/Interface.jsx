@@ -105,8 +105,8 @@ const AboutSection = (props) => {
 
 const skills = [
   { title: "Machine Learning", x: 40, y: 60 },
-  { title: "Deep Learning", x: 300, y: 10 },
-  { title: "Neural Networks", x: 600, y: 70 },
+  { title: "Agentic AI", x: 300, y: 10 },
+  { title: "Deep Learning", x: 600, y: 70 },
   { title: "Computer Vision", x: 80, y: 140 },
   { title: "NLP", x: 480, y: 130 },
   { title: "Generative AI", x: 120, y: 250 },

@@ -136,7 +136,7 @@ const ProjectSection = () => {
 
   return (
     <div id="project" 
-    className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 pt-20 relative overflow-hidden"
+    className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 pt-10 relative overflow-hidden"
      //className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-20 px-6"
      >
       {/* Animated Background Elements */}
@@ -145,7 +145,7 @@ const ProjectSection = () => {
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-blue-300 to-cyan-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-yellow-200 to-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-pulse delay-2000"></div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-12 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">

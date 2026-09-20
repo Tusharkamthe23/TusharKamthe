@@ -91,7 +91,7 @@ const TechSkills = () => {
     },
     {
       id: 'computer-vision',
-      name: 'Computer Vision',
+      name: 'Computer ',
       icon: Eye,
       description: 'Image processing, object detection, and real-time visual AI',
       technologies: ['OpenCV', 'YOLO', 'Detectron2', 'MediaPipe', 'PIL'],
