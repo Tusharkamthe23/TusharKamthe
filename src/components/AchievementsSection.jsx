@@ -61,6 +61,25 @@ const certifications = [
   },
   {
     id: 4,
+    title: 'Microsoft Certified: Azure Databricks Data Engineer Associate',
+    issuer: 'Microsoft',
+    date: '2026',
+    credentialId: '',
+    certificateImage: '/certificates/azure-databricks-data engineer-associate.png',
+    description:
+      'Validates skills in designing, implementing, and managing data engineering solutions using Azure Databricks, including data processing, transformation, orchestration, and analytics.',
+    skills: [
+      'Azure Databricks',
+      'Data Engineering',
+      'Apache Spark',
+      'Data Transformation',
+      'Data Pipelines',
+      'SQL',
+    ],
+    category: 'Data',
+  },
+  {
+    id: 4,
     title: 'Introduction to Natural Language Processing',
     issuer: 'Infosys Springboard',
     date: '2024',
