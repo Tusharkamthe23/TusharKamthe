@@ -61,6 +61,19 @@ const certifications = [
   },
   {
     id: 4,
+    title: 'GitHub Actions',
+    issuer: 'GitHub',
+    date: '2026',
+    credentialId: '',
+    certificateImage: '/certificates/github-actions.png',
+    description:
+      'Demonstrates knowledge of CI/CD automation, workflow configuration, automated testing, build and deployment pipelines, and GitHub Actions for DevOps automation.',
+    skills: ['GitHub Actions', 'CI/CD', 'Workflow Automation', 'DevOps', 'Automated Testing', 'Continuous Deployment'],
+    category: 'DevOps',
+  },
+
+  {
+    id: 5,
     title: 'Microsoft Certified: Azure Databricks Data Engineer Associate',
     issuer: 'Microsoft',
     date: '2026',
@@ -78,8 +91,9 @@ const certifications = [
     ],
     category: 'Data',
   },
+
   {
-    id: 4,
+    id: 14,
     title: 'Introduction to Natural Language Processing',
     issuer: 'Infosys Springboard',
     date: '2024',
@@ -91,7 +105,7 @@ const certifications = [
     category: 'AI',
   },
   {
-    id: 5,
+    id: 15,
     title: 'Introduction to Artificial Intelligence',
     issuer: 'Infosys Springboard',
     date: '2024',
@@ -103,7 +117,7 @@ const certifications = [
     category: 'AI',
   },
   {
-    id: 6,
+    id: 16,
     title: 'HTML, CSS, & JavaScript – Certification Course for Beginners',
     issuer: 'Udemy',
     date: '2022',
@@ -114,7 +128,7 @@ const certifications = [
     category: 'Web development',
   },
   {
-    id: 7,
+    id: 17,
     title: 'Introduction to Deep Learning & Neural Networks with Keras',
     issuer: 'Coursera',
     date: '2024',
@@ -125,7 +139,7 @@ const certifications = [
     category: 'AI',
   },
   {
-    id: 8,
+    id: 18,
     title: 'What is Data Science',
     issuer: 'Coursera',
     date: '',
@@ -137,7 +151,7 @@ const certifications = [
     category: 'AI',
   },
   {
-    id: 9,
+    id: 19,
     title: 'Computer Vision 101',
     issuer: 'Infosys Springboard',
     date: '2024',
