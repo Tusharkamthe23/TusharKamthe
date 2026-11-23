@@ -25,7 +25,7 @@ import {
 const certifications = [
   {
     id: 1,
-    title: 'Microsoft Certified: Azure AI Engineer Associate',git
+    title: 'Microsoft Certified: Azure AI Engineer Associate',
     issuer: 'Microsoft',
     date: '2026',
     credentialId: 'FA0884DE04A790ED',
